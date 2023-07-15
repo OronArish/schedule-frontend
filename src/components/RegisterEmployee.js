@@ -12,7 +12,7 @@ function RegisterEmployee(props) {
     employeeID: '',
     position: '',
     password: '',
-    role: '',
+    role: 'employee',
   });
 
   const handleInputChange = (event) => {
@@ -101,7 +101,7 @@ function RegisterEmployee(props) {
           onChange={handleInputChange}
           required
         >
-          <option className='disabled' disabled="Select Role">Select Role</option>
+          <option disabled="Select Role">Select Role</option>
           <option value="employee">Employee</option>
           <option value="manager">Manager</option>
         </StyledSelect>
