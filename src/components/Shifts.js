@@ -208,22 +208,17 @@ const Shifts = () => {
         timeZone: 'Asia/Jerusalem',
       };
   
-      const startTime = `${shiftStartDate.toLocaleDateString("en-US", options)} ${shiftStartDate.toLocaleTimeString("en-US", options)}`;
-      const endTime = `${shiftEndDate.toLocaleDateString("en-US", options)} ${shiftEndDate.toLocaleTimeString("en-US", options)}`;
-  
       return [
         shift._id,
         shift.employee,
-        startTime,
-        endTime,
+        'Start Time',
+        shiftStartDate.toLocaleString("en-US", options),
+        'End Time',
+        shiftEndDate.toLocaleString("en-US", options),
       ];
     });
   
-    const csvData = [
-      ["Shift ID", "Employee", "Start Time", "End Time"], // Titles
-      ...formattedShifts,
-    ];
-  
+    const csvData = formattedShifts;
     const csvContent = "data:text/csv;charset=utf-8," + arrayToCSV(csvData);
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
