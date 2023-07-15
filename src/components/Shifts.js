@@ -211,7 +211,7 @@ const Shifts = () => {
         };
   
         return [
-          [shift._id, shift.employee, shiftStartDate.toLocaleDateString("en-US"), shiftStartDate.toLocaleTimeString("en-US", options), " ", " ", shiftEndDate.toLocaleDateString("en-US"), shiftEndDate.toLocaleTimeString("en-US", options)]
+          [shift._id, shift.employee, shiftStartDate.toLocaleDateString("en-US"), shiftStartDate.toLocaleTimeString("en-US", options), shiftEndDate.toLocaleDateString("en-US"), shiftEndDate.toLocaleTimeString("en-US", options)]
         ];
       }),
     ];
