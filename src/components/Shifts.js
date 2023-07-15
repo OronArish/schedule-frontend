@@ -194,16 +194,33 @@ const Shifts = () => {
       return shiftStartDate >= startDate && shiftEndDate <= endDate;
     });
   
-    const csvData = [
-      ["Shift ID", "Employee", "Start Time", "End Time"], // Titles
-      ...filteredShifts.map((shift) => [
+    const formattedShifts = filteredShifts.map((shift) => {
+      const shiftStartDate = new Date(shift.startTime);
+      const shiftEndDate = new Date(shift.endTime);
+  
+      const options = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: false,
+        timeZone: 'Asia/Jerusalem',
+      };
+  
+      return [
         shift._id,
         shift.employee,
-        shift.startTime,
-        shift.endTime,
-      ]),
+        shiftStartDate.toLocaleString("en-US", options),
+        shiftEndDate.toLocaleString("en-US", options),
+      ];
+    });
+  
+    const csvData = [
+      ["Shift ID", "Employee", "Start Time", "End Time"], // Titles
+      ...formattedShifts,
     ];
-
+  
     const csvContent = "data:text/csv;charset=utf-8," + arrayToCSV(csvData);
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
@@ -212,10 +229,11 @@ const Shifts = () => {
     document.body.appendChild(link); // Required for Firefox
     link.click();
   };
-
+  
   const arrayToCSV = (arr) => {
     return arr.map((row) => row.join(",")).join("\n");
   };
+  
   return (
     <StyledComponent>
       <div className="shifts-container">
