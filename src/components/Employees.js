@@ -20,12 +20,13 @@ function Employees({ username }) {
         setEmployees(response.data);
       } catch (error) {
         console.error("Error fetching employees:", error);
+        // Handle the error here, such as showing an error message to the user
       }
     };
-
+  
     const userRoleFromLocalStorage = localStorage.getItem("role");
     setUserRole(userRoleFromLocalStorage);
-
+  
     fetchEmployees();
   }, []);
 
