@@ -195,7 +195,7 @@ const Shifts = () => {
     });
   
     const csvData = [
-      ["Shift ID", "Employee", "Start Time", " " ,"End Time"], // Titles
+      ["Shift ID", "Employee", "Start Time", " ", " " ,"End Time"], // Titles
       ...filteredShifts.flatMap((shift) => {
         const shiftStartDate = new Date(shift.startTime);
         const shiftEndDate = new Date(shift.endTime);
@@ -211,7 +211,7 @@ const Shifts = () => {
         };
   
         return [
-          [shift._id, shift.employee, shiftStartDate.toLocaleDateString("en-US"), shiftStartDate.toLocaleTimeString("en-US", options), " ", shiftEndDate.toLocaleDateString("en-US"), shiftEndDate.toLocaleTimeString("en-US", options)]
+          [shift._id, shift.employee, shiftStartDate.toLocaleDateString("en-US"), shiftStartDate.toLocaleTimeString("en-US", options), " ", " ", shiftEndDate.toLocaleDateString("en-US"), shiftEndDate.toLocaleTimeString("en-US", options)]
         ];
       }),
     ];
