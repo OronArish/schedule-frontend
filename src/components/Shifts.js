@@ -208,14 +208,14 @@ const Shifts = () => {
         timeZone: 'Asia/Jerusalem',
       };
   
-      const startDateTime = shiftStartDate.toLocaleString("en-US", options);
-      const endDateTime = shiftEndDate.toLocaleString("en-US", options);
+      const startTime = `${shiftStartDate.toLocaleDateString("en-US", options)} ${shiftStartDate.toLocaleTimeString("en-US", options)}`;
+      const endTime = `${shiftEndDate.toLocaleDateString("en-US", options)} ${shiftEndDate.toLocaleTimeString("en-US", options)}`;
   
       return [
         shift._id,
         shift.employee,
-        startDateTime,
-        endDateTime,
+        startTime,
+        endTime,
       ];
     });
   
@@ -236,6 +236,7 @@ const Shifts = () => {
   const arrayToCSV = (arr) => {
     return arr.map((row) => row.join(",")).join("\n");
   };
+  
   
   
   
