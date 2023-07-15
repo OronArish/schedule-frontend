@@ -194,31 +194,29 @@ const Shifts = () => {
       return shiftStartDate >= startDate && shiftEndDate <= endDate;
     });
   
-    const formattedShifts = filteredShifts.map((shift) => {
-      const shiftStartDate = new Date(shift.startTime);
-      const shiftEndDate = new Date(shift.endTime);
+    const csvData = [
+      ["Shift ID", "Employee", "", "Start Time", "", "", "End Time"], // Titles
+      ["", "", "Date", "Time", "", "Date", "Time"], // Subtitles
+      ...filteredShifts.flatMap((shift) => {
+        const shiftStartDate = new Date(shift.startTime);
+        const shiftEndDate = new Date(shift.endTime);
   
-      const options = {
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        hour12: false,
-        timeZone: 'Asia/Jerusalem',
-      };
+        const options = {
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          hour12: false,
+          timeZone: 'Asia/Jerusalem',
+        };
   
-      return [
-        shift._id,
-        shift.employee,
-        'Start Time',
-        shiftStartDate.toLocaleString("en-US", options),
-        'End Time',
-        shiftEndDate.toLocaleString("en-US", options),
-      ];
-    });
+        return [
+          [shift._id, shift.employee, "", shiftStartDate.toLocaleDateString("en-US"), shiftStartDate.toLocaleTimeString("en-US", options), "", shiftEndDate.toLocaleDateString("en-US"), shiftEndDate.toLocaleTimeString("en-US", options)]
+        ];
+      }),
+    ];
   
-    const csvData = formattedShifts;
     const csvContent = "data:text/csv;charset=utf-8," + arrayToCSV(csvData);
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
@@ -231,9 +229,6 @@ const Shifts = () => {
   const arrayToCSV = (arr) => {
     return arr.map((row) => row.join(",")).join("\n");
   };
-  
-  
-  
   
   return (
     <StyledComponent>
