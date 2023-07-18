@@ -24,100 +24,87 @@ const Shifts = () => {
   const [selectedEndDate, setSelectedEndDate] = useState("");
   const [userRole, setUserRole] = useState(""); // User role state
   // console.log(shifts);
+
   useEffect(() => {
     const userRoleFromSession = sessionStorage.getItem("userRole");
     if (userRoleFromSession) {
       setUserRole(userRoleFromSession);
     }
-    const savedShifts = JSON.parse(localStorage.getItem("shifts"));
-    
-    if (savedShifts && Array.isArray(savedShifts)) {
-      setShifts(savedShifts);
-    } else {
-      axios
-        .get(process.env.REACT_APP_FETCH_URL + "Shifts")
-        .then((res) => {
-          // setShifts(res.data);
-          // localStorage.setItem("shifts", JSON.stringify(res.data));
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
   
-    axios
-      .get(process.env.REACT_APP_FETCH_URL + "Employees")
-      .then((res) => {
-        setEmployees(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const fetchShifts = async () => {
+      try {
+        const response = await axios.get(process.env.REACT_APP_FETCH_URL + "shifts");
+        setShifts(response.data);
+      } catch (error) {
+        console.error("Error fetching shifts:", error);
+        // Handle the error here, such as showing an error message to the user
+      }
+    };
+  
+    const fetchEmployees = async () => {
+      try {
+        const response = await axios.get(process.env.REACT_APP_FETCH_URL + "employees");
+        setEmployees(response.data);
+      } catch (error) {
+        console.error("Error fetching employees:", error);
+        // Handle the error here, such as showing an error message to the user
+      }
+    };
+  
+    fetchShifts();
+    fetchEmployees();
   }, []);
 
   const createShift = (shift) => {
-    if (role !== "manager") {
-      alert("Only managers can create shifts");
-      return;
-    }
+    // Create the shift in the database
     axios
-      .post(process.env.REACT_APP_FETCH_URL + "Shifts", shift)
-      .then((res) => {
-        setShifts([...shifts, res.data]);
-        localStorage.setItem(
-          "shifts",
-          JSON.stringify([...shifts, res.data])
-        );
-        setSelectedEmployee("");
-        setSelectedStartTime("");
-        setSelectedEndTime("");
+      .post(process.env.REACT_APP_FETCH_URL + "shifts", shift)
+      .then((response) => {
+        // Update the shifts state
+        const newShift = response.data;
+        setShifts([...shifts, newShift]);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.error("Error creating shift:", error);
+        // Handle the error here, such as showing an error message to the user
       });
   };
-
+  
   const updateShift = (shiftId, updatedShift) => {
-    if (role !== "manager") {
-      alert("Only managers can update shifts");
-      return;
-    }
+    // Update the shift in the database
     axios
-      .put(process.env.REACT_APP_FETCH_URL + `Shifts/${shiftId}`, updatedShift)
-      .then((res) => {
+      .put(process.env.REACT_APP_FETCH_URL + `shifts/${shiftId}`, updatedShift)
+      .then(() => {
+        // Update the shifts state
         const updatedShifts = shifts.map((shift) => {
           if (shift._id === shiftId) {
-            return res.data;
-          } else {
-            return shift;
+            return updatedShift;
           }
+          return shift;
         });
         setShifts(updatedShifts);
-        localStorage.setItem("shifts", JSON.stringify(updatedShifts));
-        setIsEditMode(false);
-        setEditingShiftId(null);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.error("Error updating shift:", error);
+        // Handle the error here, such as showing an error message to the user
       });
   };
-
+  
   const deleteShift = (shiftId) => {
-    if (role !== "manager") {
-      alert("Only managers can delete shifts");
-      return;
-    }
+    // Delete the shift from the database
     axios
-      .delete(process.env.REACT_APP_FETCH_URL + `Shifts/${shiftId}`)
+      .delete(process.env.REACT_APP_FETCH_URL + `shifts/${shiftId}`)
       .then(() => {
+        // Update the shifts state
         const updatedShifts = shifts.filter((shift) => shift._id !== shiftId);
         setShifts(updatedShifts);
-        localStorage.setItem("shifts", JSON.stringify(updatedShifts));
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.error("Error deleting shift:", error);
+        // Handle the error here, such as showing an error message to the user
       });
   };
+  
 
   const handleDateClick = (info) => {
     setSelectedStartTime(info.dateStr);
@@ -346,4 +333,5 @@ const StyledComponent = styled.div`
 
 
 export default Shifts;
+
 

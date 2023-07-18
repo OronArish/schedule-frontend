@@ -78,69 +78,73 @@ function Login() {
   return (
     <StyledComponent>
       <div className="Login_page">
-        <img className="img_Login" src="images/imglogin.jpg" alt="login" />
-
-        <div className="welcome_div">
-          <h1>Welcome Back</h1>
+        <div className="image_container">
+          <img className="img_Login" src="images/imglogin.jpg" alt="login" />
         </div>
 
-        {!userData.showOtpField ? (
-          <form onSubmit={handleLogin}>
-            <div className="username_div">
-              <input
-                name="username"
-                onChange={handleChange}
-                placeholder="Your Username"
-                value={userData.username}
-              />
-            </div>
+        <div className="form_container">
+          <div className="welcome_div">
+            <h1>Welcome Back</h1>
+          </div>
 
-            <div className="password_div">
-              <input
-                name="password"
-                type="password"
-                onChange={handleChange}
-                placeholder="Password"
-                value={userData.password}
-              />
-            </div>
+          {!userData.showOtpField ? (
+            <form onSubmit={handleLogin}>
+              <div className="input_div">
+                <input
+                  name="username"
+                  onChange={handleChange}
+                  placeholder="Your Username"
+                  value={userData.username}
+                />
+              </div>
 
-            <div className="phoneNumber_div">
-              <input
-                name="phoneNumber"
-                onChange={handleChange}
-                placeholder="Your Phone Number"
-                value={userData.phoneNumber}
-              />
-            </div>
+              <div className="input_div">
+                <input
+                  name="password"
+                  type="password"
+                  onChange={handleChange}
+                  placeholder="Password"
+                  value={userData.password}
+                />
+              </div>
 
-            <button className="button" type="submit">
-              Send OTP
-            </button>
-          </form>
-        ) : (
-          <form onSubmit={handleOtpVerification}>
-            <div className="otpCode_div">
-              <input
-                name="otpCode"
-                onChange={handleChange}
-                placeholder="Enter OTP Code"
-                value={userData.otpCode}
-              />
-            </div>
+              <div className="input_div">
+                <input
+                  name="phoneNumber"
+                  onChange={handleChange}
+                  placeholder="Your Phone Number"
+                  value={userData.phoneNumber}
+                />
+              </div>
 
-            <button className="button" type="submit">
-              Verify OTP
-            </button>
-          </form>
-        )}
+              <button className="button" type="submit">
+                Send OTP
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={handleOtpVerification}>
+              <div className="input_div">
+                <input
+                  name="otpCode"
+                  onChange={handleChange}
+                  placeholder="Enter OTP Code"
+                  value={userData.otpCode}
+                />
+              </div>
+
+              <button className="button" type="submit">
+                Verify OTP
+              </button>
+            </form>
+          )}
+        </div>
       </div>
     </StyledComponent>
   );
 }
 
 const StyledComponent = styled.div`
-  * {
+ * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -152,45 +156,40 @@ const StyledComponent = styled.div`
   }
 
   .Login_page {
-    padding: 50px;
+    display: flex;
     justify-content: center;
-    text-align: left;
-    margin-left: 150px;
-    margin-top: 100px;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .image_container {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .img_Login {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .form_container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #fff;
   }
 
   .welcome_div {
-    display: block;
-    font-size: 1.5em;
-    margin-block-start: 0.83em;
-    margin-block-end: 0.83em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
+    margin-bottom: 20px;
   }
 
-  .username_div {
-    padding: 5px;
-    margin: 10px 0;
-    border-radius: 10px;
-    width: 100%;
-  }
-
-  .password_div {
-    padding: 5px;
-    margin: 10px 0;
-    border-radius: 10px;
-    width: 100%;
-  }
-
-  .phoneNumber_div {
-    padding: 5px;
-    margin: 10px 0;
-    border-radius: 10px;
-    width: 100%;
-  }
-
-  .employeeid_div {
+  .input_div {
     padding: 5px;
     margin: 10px 0;
     border-radius: 10px;
@@ -198,23 +197,32 @@ const StyledComponent = styled.div`
   }
 
   .button {
-    padding: 3px;
+    padding: 10px;
     margin: 10px 0;
     border: none;
     background-color: #3f51b5;
     color: #fff;
     font-weight: 600;
     border-radius: 5px;
-    width: 5%;
+    width: 100%;
   }
 
-  .img_Login {
-    float: right;
-    position: absolute;
-    right: 30px;
-    top: 20px;
-    width: 50%;
-    height: 90%;
+  @media screen and (max-width: 768px) {
+    .Login_page {
+      flex-direction: column;
+    }
+
+    .image_container {
+      width: 50%;
+      margin-right: 20px;
+      margin-bottom: 0;
+    }
+
+    .form_container,
+    .image_container {
+      width: 100%;
+      margin-right: 10px;
+    }
   }
 `;
 
