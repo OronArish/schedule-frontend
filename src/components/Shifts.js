@@ -26,11 +26,6 @@ const Shifts = () => {
   // console.log(shifts);
 
   useEffect(() => {
-    const userRoleFromSession = sessionStorage.getItem("userRole");
-    if (userRoleFromSession) {
-      setUserRole(userRoleFromSession);
-    }
-  
     const fetchShifts = async () => {
       try {
         const response = await axios.get(process.env.REACT_APP_FETCH_URL + "shifts");
@@ -50,7 +45,6 @@ const Shifts = () => {
         // Handle the error here, such as showing an error message to the user
       }
     };
-  
     fetchShifts();
     fetchEmployees();
   }, []);
@@ -107,6 +101,10 @@ const Shifts = () => {
   
 
   const handleDateClick = (info) => {
+    if (role !== "manager") {
+      alert("Only managers can create shifts");
+      return;
+    }
     setSelectedStartTime(info.dateStr);
     setSelectedEndTime(info.dateStr);
     setSelectedEmployee(""); // Reset selected employee
@@ -333,5 +331,6 @@ const StyledComponent = styled.div`
 
 
 export default Shifts;
+
 
 

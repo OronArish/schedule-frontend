@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from 'react-redux';
+import { setUserHander } from '../store/store';
 
 function Login() {
   const navigate = useNavigate();
+  const [userRole, setUserRole] = useState(false)
+  const dispatch = useDispatch();
+  const role = useSelector(state => state.user)
   const [userData, setUserData] = useState({
     username: '',
     password: '',
@@ -29,7 +35,8 @@ function Login() {
         if (response.status === 200) {
           console.log('Login successful');
           const role = response.data.role;
-          localStorage.setItem('role', role);
+          setUserRole(role);
+          localStorage.setItem('id', response.data.id);
           axios
             .post(process.env.REACT_APP_FETCH_URL + 'otp', {
               phoneNumber: userData.phoneNumber,
@@ -52,8 +59,9 @@ function Login() {
       .catch((error) => {
         console.log(error);
       });
-  }
 
+  }
+  
   function handleOtpVerification(e) {
     e.preventDefault();
 
@@ -65,6 +73,7 @@ function Login() {
       .then((response) => {
         if (response.status === 200) {
           console.log('OTP verification successful');
+          dispatch(setUserHander({role: userRole}))
           navigate('/home');
         } else {
           console.log('OTP verification failed');
@@ -74,6 +83,12 @@ function Login() {
         console.log(error);
       });
   }
+
+   useEffect(() => {
+    if (role) {
+    navigate('/home');
+    }
+   }, [role])
 
   return (
     <StyledComponent>
@@ -227,3 +242,5 @@ const StyledComponent = styled.div`
 `;
 
 export default Login;
+
+
