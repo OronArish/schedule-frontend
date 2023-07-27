@@ -185,17 +185,30 @@ function Constraints({ username }) {
 
 
 const StyledComponent = styled.div`
-.constraints-container {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 20px;
-}
+  margin: 0;
+  padding: 0;
+  background-image: url(https://miro.medium.com/v2/resize:fit:4000/format:webp/1*zh6zE-3VSIdMGkdnRH9X8w.jpeg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  min-height: 100vh;
+  font-family: "Mona Sans", "Mona Sans Header Fallback", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+
+  .constraints-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+  }
 
 .input-field {
   margin-bottom: 10px;
   width: 100%;
   padding: 8px;
   font-size: 14px;
+  display: flex;
 }
 
 .add-button,
@@ -220,9 +233,9 @@ const StyledComponent = styled.div`
 
 .constraint-item {
   border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
 .delete-button,

@@ -194,6 +194,18 @@ function Employees({ username }) {
 }
 
 const StyledComponent = styled.div`
+  margin: 0;
+  padding: 0;
+  background-image: url(https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  min-height: 100vh;
+  font-family: "Mona Sans", "Mona Sans Header Fallback", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+
   .employees-container {
     max-width: 500px;
     margin: 0 auto;

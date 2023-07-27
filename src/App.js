@@ -57,7 +57,6 @@ function App() {
           <Route path="/RegisterEmployee" element={<RegisterEmployee addEmployee={addEmployee} />} />
           <Route path="/Constraints" element={<Constraints />} />
           </Fragment>}
-          
         </Routes>
       </BrowserRouter>
     </>
