@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from 'styled-components';
 import Sidebar from "./Sidebar";
+import { useSelector } from 'react-redux';
 
 function Constraints({ username }) {
   const [constraints, setConstraints] = useState([]);
@@ -12,11 +13,11 @@ function Constraints({ username }) {
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
   const [editEmployeeName, setEditEmployeeName] = useState("");
-  const [role, setUserRole] = useState("");
+  const userRole = useSelector((state) => state.user);
 
   useEffect(() => {
-    const userRoleFromLocalStorage = localStorage.getItem("role");
-    setUserRole(userRoleFromLocalStorage);
+    // const userRoleFromLocalStorage = localStorage.getItem("role");
+    // setUserRole(userRoleFromLocalStorage);
     fetchConstraints();
   }, []);
   
@@ -99,7 +100,7 @@ function Constraints({ username }) {
     <StyledComponent>
       <Sidebar />
       <div className="constraints-container">
-        <h1>Constraints Page</h1>
+        <h1 style={{color: "#F8F8FF"}}>Constraints Page</h1>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -132,12 +133,12 @@ function Constraints({ username }) {
                 <p><b>EmployeeName:</b> {constraint.employeeName}</p>
                 <p><b>Title:</b> {constraint.title}</p>
                 <p><b>Description:</b> {constraint.description}</p>
-                {role === "manager" && (
+                {userRole === "manager" && (
                   <button onClick={() => handleEdit(constraint)} className="edit-button">
                     Edit
                   </button>
                 )}
-                {role === "manager" && (
+                {userRole === "manager" && (
                   <button onClick={() => handleDelete(constraint._id)} className="delete-button">
                     Delete
                   </button>
@@ -201,6 +202,8 @@ const StyledComponent = styled.div`
     max-width: 500px;
     margin: 0 auto;
     padding: 20px;
+    height: 100vh;
+    overflow-y: auto;
   }
 
 .input-field {
@@ -236,6 +239,7 @@ const StyledComponent = styled.div`
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 10px;
+    background: #F8F8FF;
 }
 
 .delete-button,

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from 'styled-components';
 import Sidebar from "./Sidebar";
+import { useSelector } from 'react-redux';
 
 function Employees({ username }) {
   const [employees, setEmployees] = useState([]);
@@ -11,7 +12,7 @@ function Employees({ username }) {
   const [editEmployeeID, setEditEmployeeID] = useState("");
   const [editPosition, setEditPosition] = useState("");
   const [editingEmployee, setEditingEmployee] = useState(null);
-  const [role, setUserRole] = useState("");
+  const userRole = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -24,8 +25,8 @@ function Employees({ username }) {
       }
     };
   
-    const userRoleFromLocalStorage = localStorage.getItem("role");
-    setUserRole(userRoleFromLocalStorage);
+    // const userRoleFromLocalStorage = localStorage.getItem("role");
+    // setUserRole(userRoleFromLocalStorage);
   
     fetchEmployees();
   }, []);
@@ -110,7 +111,7 @@ function Employees({ username }) {
     <StyledComponent>
       <Sidebar />
       <div className="employees-container">
-        <h1>Employees Page</h1>
+        <h1 style={{color: "#F8F8FF"}}>Employees Page</h1>
         <ul className="employees-list">
           {employees.map((employee) => (
             <li key={employee._id || employee.email} className="employee-item">
@@ -129,12 +130,12 @@ function Employees({ username }) {
               <p className="mb-1">
                 <strong>Position:</strong> {employee.position}
               </p>
-              {role === "manager" && (
+              {userRole === "manager" && (
               <button onClick={() => handleEdit(employee)} className="edit-button">
                 Edit
               </button>
               )}
-              {role === "manager" && (
+              {userRole === "manager" && (
               <button onClick={() => handleDelete(employee.username)} className="delete-button">
                 Delete
               </button>
@@ -196,7 +197,7 @@ function Employees({ username }) {
 const StyledComponent = styled.div`
   margin: 0;
   padding: 0;
-  background-image: url(https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80);
+  background-image: url(https://images.unsplash.com/photo-1487611459768-bd414656ea10?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -210,6 +211,8 @@ const StyledComponent = styled.div`
     max-width: 500px;
     margin: 0 auto;
     padding: 20px;
+    height: 100vh;
+    overflow-y: auto;
   }
 
   .employee-item {
@@ -217,6 +220,7 @@ const StyledComponent = styled.div`
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 10px;
+    background: #F8F8FF;
   }
 
   .delete-button,

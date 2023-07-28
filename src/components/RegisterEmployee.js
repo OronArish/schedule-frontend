@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
+import { useSelector } from 'react-redux';
 
 function RegisterEmployee(props) {
   const navigate = useNavigate();
+  const userRole = useSelector((state) => state.user);
   const [employee, setEmployee] = useState({
     username: '',
     email: '',
@@ -46,7 +48,7 @@ function RegisterEmployee(props) {
     <div>
       <Sidebar employee={employee} />
       <StyledRegisterForm onSubmit={handleSubmit}>
-        <h2>Register Employee</h2>
+        <h2 style={{color: "#F8F8FF"}}>Register Employee</h2>
         <StyledInput
           type="text"
           placeholder="Name"
@@ -112,15 +114,23 @@ function RegisterEmployee(props) {
 }
 
 const StyledRegisterForm = styled.form`
-  padding: 20px 50px;
+background-image: url(https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80);
+background-size: cover;
+background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  background-attachment: fixed;
+
 `;
 
 const StyledInput = styled.input`
-  width: 100%;
+  width: 30%;
   padding: 10px;
   margin-bottom: 20px;
   border-radius: 4px;
@@ -129,7 +139,7 @@ const StyledInput = styled.input`
 `;
 
 const StyledSelect = styled.select`
-  width: 101.57%;
+  width: 32%;
   padding: 10px;
   margin-bottom: 20px;
   border-radius: 4px;
@@ -144,7 +154,7 @@ const StyledSelect = styled.select`
 `;
 
 const StyledButton = styled.button`
-  width: 100%;
+  width: 32%;
   padding: 10px;
   border-radius: 4px;
   border: none;

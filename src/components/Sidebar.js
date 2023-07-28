@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const StyledLogoutButton = styled.button`
   background-color: #007bff;
@@ -15,18 +16,18 @@ const StyledLogoutButton = styled.button`
 
 function Sidebar({ employee }) {
   const [showMenu, setShowMenu] = useState(false);
-  const [role, setUserRole] = useState('');
+  const userRole = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   const handleMenuToggle = () => {
     setShowMenu(!showMenu);
   };
 
-  useEffect(() => {
-    // Fetch the user role from local storage or API
-    const storedUserRole = localStorage.getItem('role');
-    setUserRole(storedUserRole);
-  }, []);
+  // useEffect(() => {
+  //   // Fetch the user role from local storage or API
+  //   const storedUserRole = localStorage.getItem('role');
+  //   setUserRole(storedUserRole);
+  // }, []);
 
   const handleLogout = () => {
     // Perform logout actions, e.g., clear user data, remove tokens, etc.
@@ -58,7 +59,7 @@ function Sidebar({ employee }) {
               Constraints
             </Link>
           </li>
-          {role === 'manager' && (
+          {userRole === 'manager' && (
             <li>
               <Link to="/RegisterEmployee" className="sidebar-link">
                 Register Employee

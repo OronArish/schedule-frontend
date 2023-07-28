@@ -9,6 +9,7 @@ import Modal from "react-modal";
 import EmailButton from "./EmailButton";
 import { saveAs } from "file-saver";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 
 const Shifts = () => {
@@ -22,7 +23,8 @@ const Shifts = () => {
   const [editingShiftId, setEditingShiftId] = useState(null);
   const [selectedStartDate, setSelectedStartDate] = useState("");
   const [selectedEndDate, setSelectedEndDate] = useState("");
-  const [userRole, setUserRole] = useState(""); // User role state
+  const userRole = useSelector((state) => state.user);
+  // User role state
   // console.log(shifts);
 
   useEffect(() => {
@@ -101,7 +103,7 @@ const Shifts = () => {
   
 
   const handleDateClick = (info) => {
-    if (role !== "manager") {
+    if (userRole !== "manager") {
       alert("Only managers can create shifts");
       return;
     }
@@ -112,7 +114,7 @@ const Shifts = () => {
   };
 
   const handleShiftEdit = (shiftId, shift) => {
-    if (role !== "manager") {
+    if (userRole !== "manager") {
       alert("Only managers can create shifts");
       return;
     }
@@ -272,7 +274,7 @@ const Shifts = () => {
           />
         </Modal>
   
-        {role === "manager" && (
+        {userRole === "manager" && (
           <div className="button-container">
             <EmailButton shifts={shifts} employees={employees} handleSendEmails={handleSendEmails} />
             <div className="date-range-container">

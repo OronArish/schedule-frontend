@@ -1,10 +1,11 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
 function Home() {
   // Retrieve the user role from localStorage
-  const userRole = localStorage.getItem('userRole');
+  const userRole = useSelector((state) => state.user);
 
   return (
     <StyledComponent>
