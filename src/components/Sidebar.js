@@ -31,8 +31,15 @@ function Sidebar({ employee }) {
 
   const handleLogout = () => {
     // Perform logout actions, e.g., clear user data, remove tokens, etc.
-    localStorage.removeItem('role');
-    navigate('/login'); // Redirect to the login page after logout
+    localStorage.removeItem('id');
+  
+    // Check if the item was successfully removed from localStorage before navigating
+    if (!localStorage.getItem('id')) {
+      navigate('/login'); // Redirect to the login page after successful logout
+    } else {
+      console.error('Error: Unable to remove user data from localStorage.');
+      // Handle the error here, e.g., show an error message to the user or try again.
+    }
   };
 
   return (
